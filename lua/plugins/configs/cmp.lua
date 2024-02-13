@@ -10,6 +10,7 @@ local field_arrangement = {
   atom_colored = { "kind", "abbr", "menu" },
 }
 
+
 local formatting_style = {
   -- default fields order i.e completion word + item.kind + item.kind icons
   fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
@@ -110,7 +111,13 @@ local options = {
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
+    -- HACK: added this line
+    { name = "copilot" },
   },
+  -- HACK: added this line
+  experimental = {
+    ghost_text = true,
+  }
 }
 
 if cmp_style ~= "atom" and cmp_style ~= "atom_colored" then

@@ -3,6 +3,32 @@ local M = {}
 M.disabled = {
   n = {
     ["S"] = { "" }
+  },
+  i = {
+    ["<C-r>"] = { "" }
+  }
+}
+
+M.dap = {
+  plugin = true,
+  n = {
+    ["<leader>db"] = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle breakpoint" },
+    ["<leader>dr"] = { "<cmd>lua require('dap').repl.open()<cr>", "Repl" },
+    ["<leader>dc"] = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
+    ["<leader>dn"] = { "<cmd>lua require('dap').step_over()<cr>", "Step over" },
+    ["<leader>di"] = { "<cmd>lua require('dap').step_into()<cr>", "Step into" },
+    ["<leader>do"] = { "<cmd>lua require('dap').step_out()<cr>", "Step out" },
+    ["<leader>dl"] = { "<cmd>lua require('dap').run_last()<cr>", "Run last" },
+  }
+}
+
+M.copilot = {
+  i = {
+    ["<C-r>"] = {
+      'copilot#Accept("\\<CR>")',
+      "Accept copilot suggestions",
+      opts = { expr = true, replace_keycodes = false }
+    }
   }
 }
 

@@ -3,11 +3,15 @@ local plugins = {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
+        -- cpp
         "clangd",
+        "clang-format",
+        "codelldb",
+        -- rust
         "rust-analyzer",
+        -- ts
         "typescript-language-server",
         "graphql-language-service-cli",
-        "gopls",
         "astro-language-server",
         "emmet-language-server",
         "tailwindcss-language-server",
@@ -15,9 +19,10 @@ local plugins = {
         "pyright",
         "black",
         "mypy",
+        "prettierd",
+        "gopls",
         "ruff",
         "stylua",
-        "prettierd",
         "eslint_d",
         "asm-lsp",
       },
@@ -33,6 +38,7 @@ local plugins = {
         "markdown",
         "rust",
         "go",
+        "cpp",
 
         -- web dev
         "html",
@@ -50,6 +56,7 @@ local plugins = {
         "nix",
         "terraform",
         "nasm",
+        "sql",
       },
       incremental_selection = {
         enable = true,
@@ -63,6 +70,26 @@ local plugins = {
     },
   },
   { "github/copilot.vim", lazy = false },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("chatgpt").setup({
+        api_key_cmd = "op read op://Personal/ChatGPT-API/credential",
+      })
+    end
+  },
   {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
@@ -109,8 +136,38 @@ local plugins = {
   },
   {
     "mfussenegger/nvim-dap",
-    init = function()
+    config = function()
       require("core.utils").load_mappings "dap"
+    end,
+  },
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {
+      handlers = {}
+    },
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    event = "VeryLazy",
+    dependencies = "mfussenegger/nvim-dap",
+    config = function()
+      local dap = require("dap")
+      local dapui = require("dapui")
+      dapui.setup()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
     end,
   },
   {

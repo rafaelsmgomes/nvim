@@ -15,7 +15,7 @@ local servers = {
   "jsonls",
   "marksman",
   "tflint",
-  "docker-compose-language-service",
+  -- "docker-compose-language-service",
   "asm_lsp",
 }
 

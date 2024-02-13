@@ -9,7 +9,6 @@ local sources = {
   formatting.prettierd.with {
     extra_filetypes = { "astro", "json", "html", "tmpl" },
   },
-  -- formatting.prettier,
   formatting.terraform_fmt,
   formatting.alejandra,
   formatting.gofmt,
