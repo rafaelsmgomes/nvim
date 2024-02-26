@@ -15,8 +15,9 @@ local servers = {
   "jsonls",
   "marksman",
   "tflint",
-  -- "docker-compose-language-service",
+  "docker_compose_language_service",
   "asm_lsp",
+  "cmake",
 }
 
 for _, lsp in pairs(servers) do
@@ -30,6 +31,12 @@ for _, lsp in pairs(servers) do
     }
   }
 end
+
+lspconfig.terraformls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "tf", "hcl", "terraform" },
+}
 
 lspconfig.tailwindcss.setup {
   on_attach = on_attach,
@@ -55,6 +62,7 @@ lspconfig["emmet_language_server"].setup {
     "tmpl",
     "templates",
     "templ",
+    "terraform_lsp",
   }
 }
 

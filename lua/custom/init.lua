@@ -13,3 +13,7 @@ vim.api.nvim_create_autocmd("BufRead", {
   pattern = "*.envrc",
   command = "set filetype=bash"
 })
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.tf",
+  command = "set filetype=hcl"
+})

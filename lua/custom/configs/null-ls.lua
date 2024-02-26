@@ -9,7 +9,8 @@ local sources = {
   formatting.prettierd.with {
     extra_filetypes = { "astro", "json", "html", "tmpl" },
   },
-  formatting.terraform_fmt,
+  -- formatting.terrafmt,
+  -- formatting.hclfmt,
   formatting.alejandra,
   formatting.gofmt,
   formatting.goimports_reviser,
@@ -17,6 +18,7 @@ local sources = {
   lint.ruff,
   lint.shellcheck,
   lint.eslint_d,
+  -- lint.terraform_validate,
 }
 
 null_ls.setup {

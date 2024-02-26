@@ -7,6 +7,7 @@ local plugins = {
         "clangd",
         "clang-format",
         "codelldb",
+        "cmake-language-server",
         -- rust
         "rust-analyzer",
         -- ts
@@ -26,6 +27,9 @@ local plugins = {
         "eslint_d",
         "asm-lsp",
       },
+      filetype_extensions = {
+        hcl = { "terraform", "hcl" },
+      }
     },
   },
   {
@@ -54,7 +58,7 @@ local plugins = {
         "graphql",
         "prisma",
         "nix",
-        "terraform",
+        "hcl",
         "nasm",
         "sql",
       },
