@@ -87,6 +87,16 @@ M.abc = {
       end,
       "call autocomplete suggestions",
     },
+    ["<C-c>"] = { "<Esc>", "Leave insert mode" }
+    -- ["<Esc>"] = {
+    --   function()
+    --     if require("cmp").visible() then
+    --       require("cmp").mapping.close()
+    --     end
+    --     return "<Esc>"
+    --   end,
+    --   "close autocomplete suggestions",
+    -- },
   },
   v = {
     ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Move selected lines down" },

@@ -28,4 +28,28 @@ function M.merge_configs(default_config, project_config)
   return default_config
 end
 
+M.is_leptos_project = function()
+  local lspconfig_util = require("lspconfig.util")
+  local root_dir = lspconfig_util.find_git_ancestor(vim.fn.getcwd())
+  if root_dir then
+    return vim.fn.filereadable(root_dir .. "/.leptos")
+  end
+  return false
+end
+
+M.get_project_rustanalyzer_settings = function()
+  local handle = io.open(vim.fn.resolve(vim.fn.getcwd() .. "/./.rust-analyzer.json"))
+  if not handle then
+    return
+  end
+
+  local out = handle:read("*a")
+  handle:close()
+  local config = vim.json.decode(out)
+  if type(config) == "table" then
+    return config
+  end
+  return {}
+end
+
 return M

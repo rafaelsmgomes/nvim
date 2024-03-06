@@ -6,6 +6,14 @@ local util = require "lspconfig/util"
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
+nlspsettings.setup({
+  config_home = vim.fn.stdpath('config') .. './nlspsettings',
+  local_settings_dir = '.nlsp-settings',
+  local_settings_root_markers_fallback = { ".git" },
+  append_default_schemas = true,
+  loader = 'json'
+})
+
 local servers = {
   "astro",
   "graphql",
@@ -18,6 +26,7 @@ local servers = {
   "docker_compose_language_service",
   "asm_lsp",
   "cmake",
+  "terraform_lsp",
 }
 
 for _, lsp in pairs(servers) do
@@ -41,29 +50,43 @@ lspconfig.terraformls.setup {
 lspconfig.tailwindcss.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  filetypes = { "html", "css", "scss", "javascript", "typescript", "astro", "javascriptreact", "typescriptreact", "rust" },
+  init_options = {
+    userLanguages = {
+      rust = "html",
+    }
+  },
   settings = {
     tailwindCSS = {
       classAttributes = { "class", "className", "axisLineClassName", "tickClassName" },
+      -- includeLanguages = {
+      --   rust = "rust",
+      --   "*.rs = rust",
+      -- }
     }
   }
 }
 
+local emmet_filetypes = {
+  "css",
+  "html",
+  "javascriptreact",
+  "sass",
+  "scss",
+  "typescriptreact",
+  "tmpl",
+  "templates",
+  "templ",
+}
+
+if require("custom.utils").is_leptos_project() then
+  table.insert(emmet_filetypes, "rust")
+end
+
 lspconfig["emmet_language_server"].setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  filetypes = {
-    "css",
-    "html",
-    "javascriptreact",
-    "sass",
-    "scss",
-    "typescriptreact",
-    -- "rust",
-    "tmpl",
-    "templates",
-    "templ",
-    "terraform_lsp",
-  }
+  filetypes = emmet_filetypes
 }
 
 lspconfig.tsserver.setup {
@@ -106,19 +129,3 @@ lspconfig.sqlls.setup {
   capabilities = capabilities,
   cmd = { "sql-language-server", "up", "--method", "stdio" }
 }
-
--- nlspsettings.setup({
---   config_home = vim.fn.stdpath('config') .. './nlspsettings',
---   local_settings_dir = '.nlspsettings',
---   local_settings_root_markers_fallback = { ".git" },
---   append_default_schemas = true,
---   loader = 'json'
--- })
-
--- local project_config = vim.fn.getcwd() .. "/project_config.lua"
--- if vim.fn.filereadable(project_config) == 1 then
---   local project_settings = dofile(project_config)
---   local default_setting = require("custom.configs.lspconfig").tailwindcss
---   local merged_config = require('custom.utils').merge_configs(default_setting, project_settings)
---   require("lspconfig").tailwindcss.setup(merged_config)
--- end

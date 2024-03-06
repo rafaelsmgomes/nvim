@@ -123,7 +123,7 @@ local plugins = {
     "rust-lang/rust.vim",
     ft = "rust",
     init = function()
-      -- vim.g.rustfmt_command = "leptosfmt --stdin | rustfmt"
+      vim.g.rustfmt_command = "leptosfmt --stdin | rustfmt"
       vim.g.rustfmt_autosave = 1
     end,
   },
