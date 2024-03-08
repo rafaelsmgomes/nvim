@@ -34,6 +34,9 @@ local plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     opts = {
       ensure_installed = {
         -- defaults
@@ -58,6 +61,7 @@ local plugins = {
         "graphql",
         "prisma",
         "nix",
+        "toml",
         "hcl",
         "nasm",
         "sql",
@@ -71,13 +75,35 @@ local plugins = {
           node_decremental = "<s-h>",
         },
       },
-    },
+    }
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    lazy = true,
+    opts = function()
+      require("custom.configs.nvim-treesitter")
+      require("custom.configs.nvim-treesitter-textobjects")
+    end,
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end
   },
   { "github/copilot.vim", lazy = false },
   {
     "zbirenbaum/copilot-cmp",
     config = function()
       require("copilot_cmp").setup()
+    end,
+  },
+  {
+    "michaelrommel/nvim-silicon",
+    lazy = true,
+    cmd = "Silicon",
+    opts = function()
+      return require "custom.configs.nvim-silicon"
+    end,
+    config = function(_, opts)
+      require("silicon").setup(opts)
     end,
   },
   {
@@ -260,6 +286,9 @@ local plugins = {
   {
     "drybalka/tree-climber.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = function()
+      return require("custom.configs.nvim-treesitter")
+    end
   },
 }
 
