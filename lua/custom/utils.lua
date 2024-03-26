@@ -32,7 +32,7 @@ M.is_leptos_project = function()
   local lspconfig_util = require("lspconfig.util")
   local root_dir = lspconfig_util.find_git_ancestor(vim.fn.getcwd())
   if root_dir then
-    return vim.fn.filereadable(root_dir .. "/.leptos")
+    return vim.fn.filereadable(root_dir .. "/leptosfmt.toml")
   end
   return false
 end

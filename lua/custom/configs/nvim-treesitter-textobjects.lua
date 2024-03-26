@@ -37,14 +37,14 @@ local options = {
       goto_previous_start = {
         ["[f"] = "@function.outer",
         ["[c"] = "@class.outer",
-        ["]i"] = "@conditional.outer",
-        ["]l"] = "@loop.outer",
+        ["[i"] = "@conditional.outer",
+        ["[l"] = "@loop.outer",
       },
       goto_previous_end = {
         ["[F"] = "@function.outer",
         ["[C"] = "@class.outer",
-        ["]I"] = "@conditional.outer",
-        ["]L"] = "@loop.outer",
+        ["[I"] = "@conditional.outer",
+        ["[L"] = "@loop.outer",
       },
     },
   }

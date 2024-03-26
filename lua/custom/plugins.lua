@@ -62,9 +62,11 @@ local plugins = {
         "prisma",
         "nix",
         "toml",
+        "yaml",
         "hcl",
         "nasm",
         "sql",
+        "vimdoc",
       },
       incremental_selection = {
         enable = true,
@@ -81,8 +83,7 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter-textobjects",
     lazy = true,
     opts = function()
-      require("custom.configs.nvim-treesitter")
-      require("custom.configs.nvim-treesitter-textobjects")
+      return require("custom.configs.nvim-treesitter-textobjects")
     end,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
@@ -105,6 +106,14 @@ local plugins = {
     config = function(_, opts)
       require("silicon").setup(opts)
     end,
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+    -- lazy = false,
+    config = function ()
+      require "custom.configs.ufo"
+    end
   },
   {
     "jackMort/ChatGPT.nvim",
@@ -149,7 +158,7 @@ local plugins = {
     "rust-lang/rust.vim",
     ft = "rust",
     init = function()
-      vim.g.rustfmt_command = "leptosfmt --stdin | rustfmt"
+      -- vim.g.rustfmt_command = "leptosfmt --stdin | rustfmt"
       vim.g.rustfmt_autosave = 1
     end,
   },

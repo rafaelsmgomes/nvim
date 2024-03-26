@@ -59,10 +59,10 @@ lspconfig.tailwindcss.setup {
   settings = {
     tailwindCSS = {
       classAttributes = { "class", "className", "axisLineClassName", "tickClassName" },
-      -- includeLanguages = {
-      --   rust = "rust",
-      --   "*.rs = rust",
-      -- }
+      includeLanguages = {
+        rust = "rust",
+        "*.rs = rust",
+      }
     }
   }
 }
@@ -79,14 +79,10 @@ local emmet_filetypes = {
   "templ",
 }
 
-if require("custom.utils").is_leptos_project() then
-  table.insert(emmet_filetypes, "rust")
-end
-
 lspconfig["emmet_language_server"].setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  filetypes = emmet_filetypes
+  filetypes = emmet_filetypes,
 }
 
 lspconfig.tsserver.setup {
