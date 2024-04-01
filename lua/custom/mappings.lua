@@ -57,7 +57,7 @@ M.abc = {
     ["<A-j>"] = { ":m .+1<CR>==", "move line down" },
     ["<A-k>"] = { ":m .-2<CR>==", "move line up" },
     -- { ["<leader>u"] = {function () end, "Toggle Undotree"} }
-    ["<leader>gs"] = { "<cmd>Git<cr>", "Git Status" },
+    ["<leader>gs"] = { "<cmd>Neogit<cr>", "Git Status" },
     ["<leader>y"] = { '"+y', "Yank into clippboard" },
     ["<leader>Y"] = { '"+Y', "Yank into system clippboard" },
     ["<leader>d"] = { '"_d', "Delete into the void register" },
@@ -133,6 +133,11 @@ M.telescope = {
       end,
       "Show diagnostics",
     },
+    ["<leader>gb"] = {
+      function()
+        require("telescope.builtin").git_branches()
+      end
+      , "Show git branches" },
   },
 }
 
@@ -145,6 +150,32 @@ M.rust = {
       "Expand macros recursively",
     },
   },
+}
+
+M.ufo = {
+  n = {
+    ["zR"] = { function()
+      require("ufo").openAllFolds()
+    end, "Open all Folds" },
+    ["zr"] = { function()
+      require("ufo").openFoldsExceptKinds()
+    end, "Open all Folds" },
+    ["zM"] = { function()
+      require("ufo").closeAllFolds()
+    end, "Close all Folds"
+    },
+    ["zm"] = { function()
+      require("ufo").closeFoldsWith()
+    end, "Close all Folds"
+    },
+    ["zK"] = { function()
+      local winid = require("ufo").peekFoldedLinesUnderCursor()
+      if not winid then
+        vim.lsp.buf.hover()
+      end
+    end, "Peek fold" },
+    ["zv"] = { "za", "Toggle fold" }
+  }
 }
 
 return M

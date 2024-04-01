@@ -26,7 +26,7 @@ local servers = {
   "docker_compose_language_service",
   "asm_lsp",
   "cmake",
-  "terraform_lsp",
+  -- "terraform_lsp",
 }
 
 for _, lsp in pairs(servers) do
@@ -67,22 +67,20 @@ lspconfig.tailwindcss.setup {
   }
 }
 
-local emmet_filetypes = {
-  "css",
-  "html",
-  "javascriptreact",
-  "sass",
-  "scss",
-  "typescriptreact",
-  "tmpl",
-  "templates",
-  "templ",
-}
-
 lspconfig["emmet_language_server"].setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  filetypes = emmet_filetypes,
+  filetypes = {
+    "css",
+    "html",
+    "javascriptreact",
+    "sass",
+    "scss",
+    "typescriptreact",
+    "tmpl",
+    "templates",
+    "templ",
+  },
 }
 
 lspconfig.tsserver.setup {

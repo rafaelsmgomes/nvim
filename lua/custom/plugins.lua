@@ -89,7 +89,7 @@ local plugins = {
       require("nvim-treesitter.configs").setup(opts)
     end
   },
-  { "github/copilot.vim", lazy = false },
+  { "github/copilot.vim",  lazy = false },
   {
     "zbirenbaum/copilot-cmp",
     config = function()
@@ -110,9 +110,9 @@ local plugins = {
   {
     "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
-    -- lazy = false,
-    config = function ()
-      require "custom.configs.ufo"
+    lazy = false,
+    config = function()
+      return require("custom.configs.ufo")
     end
   },
   {
@@ -154,6 +154,16 @@ local plugins = {
     lazy = false,
   },
   { "tpope/vim-fugitive", event = "BufRead" },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = true,
+    lazy = false,
+  },
   {
     "rust-lang/rust.vim",
     ft = "rust",

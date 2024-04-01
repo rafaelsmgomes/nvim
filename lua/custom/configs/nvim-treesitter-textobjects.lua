@@ -12,8 +12,8 @@ local options = {
         ["am"] = "@call.outer",
         ["im"] = "@call.inner",
 
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
+        ["as"] = "@class.outer",
+        ["is"] = "@class.inner",
 
         ["al"] = "@loop.outer",
         ["ai"] = "@loop.inner",
@@ -24,25 +24,25 @@ local options = {
       set_jumps = true,
       goto_next_start = {
         ["]f"] = "@function.outer",
-        ["]c"] = "@class.outer",
+        ["]s"] = "@class.outer",
         ["]i"] = "@conditional.outer",
         ["]l"] = "@loop.outer",
       },
       goto_next_end = {
         ["]F"] = "@function.outer",
-        ["]C"] = "@class.outer",
+        ["]S"] = "@class.outer",
         ["]I"] = "@conditional.outer",
         ["]L"] = "@loop.outer",
       },
       goto_previous_start = {
         ["[f"] = "@function.outer",
-        ["[c"] = "@class.outer",
+        ["[s"] = "@class.outer",
         ["[i"] = "@conditional.outer",
         ["[l"] = "@loop.outer",
       },
       goto_previous_end = {
         ["[F"] = "@function.outer",
-        ["[C"] = "@class.outer",
+        ["[S"] = "@class.outer",
         ["[I"] = "@conditional.outer",
         ["[L"] = "@loop.outer",
       },

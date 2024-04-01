@@ -7,7 +7,7 @@ local lint = null_ls.builtins.diagnostics
 local sources = {
   formatting.clang_format,
   formatting.prettierd.with {
-    extra_filetypes = { "astro", "json", "html", "tmpl" },
+    extra_filetypes = { "astro", "json", "html", "tmpl", "toml" },
   },
   -- formatting.terrafmt,
   -- formatting.hclfmt,
