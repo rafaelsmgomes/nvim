@@ -238,7 +238,6 @@ local plugins = {
       vim.cmd [[silent! GoInstallDeps]]
     end,
   },
-  -- TODO: investigate what is this one for
   {
     "hrsh7th/nvim-cmp",
     opts = function()
@@ -309,6 +308,30 @@ local plugins = {
       return require("custom.configs.nvim-treesitter")
     end
   },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/Obsidian Vault/",
+        }
+      },
+      daily_notes = {
+        folder = "daily",
+        template = "templates/daily.md",
+      },
+      ui = {
+        -- enable = false
+      }
+    }
+  }
 }
 
 return plugins

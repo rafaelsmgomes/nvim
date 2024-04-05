@@ -15,9 +15,9 @@ local sources = {
   formatting.gofmt,
   formatting.goimports_reviser,
 
-  lint.ruff,
-  lint.shellcheck,
-  lint.eslint_d,
+  require("none-ls.diagnostics.eslint_d"),
+  require("none-ls.diagnostics.ruff"),
+  require("none-ls-shellcheck.diagnostics"),
   -- lint.terraform_validate,
 }
 

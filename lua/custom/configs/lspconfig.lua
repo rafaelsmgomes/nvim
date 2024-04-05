@@ -21,11 +21,11 @@ local servers = {
   "dockerls",
   "nil_ls",
   "jsonls",
-  "marksman",
   "tflint",
   "docker_compose_language_service",
   "asm_lsp",
   "cmake",
+  "html",
   -- "terraform_lsp",
 }
 
@@ -46,6 +46,12 @@ lspconfig.terraformls.setup {
   capabilities = capabilities,
   filetypes = { "tf", "hcl", "terraform" },
 }
+
+lspconfig.markdown_oxide.setup({
+  capabilities = capabilities,
+  root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
+})
+
 
 lspconfig.tailwindcss.setup {
   on_attach = on_attach,
