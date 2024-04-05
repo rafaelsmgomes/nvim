@@ -27,7 +27,6 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 })
 
 
-opt.wrap = true
-opt.textwidth = 120
 opt.conceallevel = 1
--- opt.formatoptions = 'jcroqlnt'
+
+

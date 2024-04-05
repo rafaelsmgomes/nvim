@@ -17,7 +17,7 @@ local sources = {
 
   require("none-ls.diagnostics.eslint_d"),
   require("none-ls.diagnostics.ruff"),
-  require("none-ls-shellcheck.diagnostics"),
+  -- require("none-ls-shellcheck.diagnostics"),
   -- lint.terraform_validate,
 }
 

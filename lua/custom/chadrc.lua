@@ -1,4 +1,5 @@
 ---@type ChadrcConfig
+---@class M
 local M = {}
 
 M.ui = { theme = 'tokyonight' }

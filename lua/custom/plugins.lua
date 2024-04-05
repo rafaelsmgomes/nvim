@@ -1,6 +1,6 @@
 local plugins = {
   {
-    "williamboman/mason.nvim",
+   "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         -- cpp
@@ -36,6 +36,7 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
+      "windwp/nvim-ts-autotag",
     },
     opts = {
       ensure_installed = {
@@ -89,7 +90,7 @@ local plugins = {
       require("nvim-treesitter.configs").setup(opts)
     end
   },
-  { "github/copilot.vim",  lazy = false },
+  { "github/copilot.vim", lazy = false },
   {
     "zbirenbaum/copilot-cmp",
     config = function()
@@ -116,22 +117,12 @@ local plugins = {
     end
   },
   {
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("chatgpt").setup({
-        api_key_cmd = "op read op://Personal/ChatGPT-API/credential",
-      })
-    end
-  },
-  {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+      "gbprod/none-ls-shellcheck.nvim",
+    },
     ft = { "go", "python" },
     opts = function()
       return require "custom.configs.null-ls"
@@ -203,7 +194,10 @@ local plugins = {
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
-    dependencies = "mfussenegger/nvim-dap",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
@@ -329,9 +323,49 @@ local plugins = {
       },
       ui = {
         -- enable = false
-      }
+      },
+      disable_frontmatter = true,
     }
-  }
+  },
+  {
+    "folke/trouble.nvim",
+    branch = "dev",
+    lazy = "Lazy",
+    keys = {
+      {
+        "<leader>xd",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xf",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>xl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+
+    },
+    opts = {}
+  },
 }
 
 return plugins
