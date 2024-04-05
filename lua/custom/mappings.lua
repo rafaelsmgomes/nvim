@@ -2,12 +2,47 @@ local M = {}
 
 M.disabled = {
   n = {
-    ["S"] = { "" }
+    ["S"] = { "" },
   },
   i = {
     ["<C-r>"] = { "" }
   }
 }
+
+-- M.trouble = {
+--   n = {
+--     ["<leader>xx"] =
+--     {
+--       "<cmd>Trouble diagnostics toggle<cr>",
+--       desc = "Diagnostics (Trouble)",
+--     },
+--     ["<leader>xd"] =
+--     {
+--       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+--       desc = "Buffer Diagnostics (Trouble)",
+--     },
+--     ["<leader>cs"] =
+--     {
+--       "<cmd>Trouble symbols toggle focus=false<cr>",
+--       desc = "Symbols (Trouble)",
+--     },
+--     ["<leader>cl"] =
+--     {
+--       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+--       desc = "LSP Definitions / references / ... (Trouble)",
+--     },
+--     ["<leader>xL"] =
+--     {
+--       "<cmd>Trouble loclist toggle<cr>",
+--       desc = "Location List (Trouble)",
+--     },
+--     ["<leader>xQ"] =
+--     {
+--       "<cmd>Trouble qflist toggle<cr>",
+--       desc = "Quickfix List (Trouble)",
+--     },
+--   }
+-- }
 
 M.dap = {
   plugin = true,
@@ -23,6 +58,22 @@ M.dap = {
 }
 
 M.copilot = {
+  plugin = true,
+  n = {
+    ["<leader>cp"] = {
+      function()
+        local status_output = vim.fn.execute("Copilot status")
+        if string.find(status_output, "Enabled") then
+          vim.cmd("Copilot disable")
+          print(vim.cmd("Copilot status"))
+        else
+          vim.cmd("Copilot enable")
+          print(vim.cmd("Copilot status"))
+        end
+      end,
+      "Toggle Copilot",
+    }
+  },
   i = {
     ["<C-r>"] = {
       'copilot#Accept("\\<CR>")',
@@ -34,6 +85,36 @@ M.copilot = {
 
 M.abc = {
   n = {
+    ["<leader>ra"] = {
+      function()
+        require("nvchad.renamer").open()
+      end,
+      "LSP rename",
+    },
+    ["<leader>ca"] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      "LSP code action",
+    },
+    ["[d"] = {
+      function()
+        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+      end,
+      "Goto prev",
+    },
+    ["]d"] = {
+      function()
+        vim.diagnostic.goto_next({ float = { border = "rounded" } })
+      end,
+      "Goto next",
+    },
+    ["K"] = {
+      function()
+        vim.lsp.buf.hover()
+      end,
+      "LSP hover",
+    },
     ["gd"] = {
       "<cmd>Telescope lsp_definitions<CR>",
       "LSP definition",
@@ -88,28 +169,19 @@ M.abc = {
       "call autocomplete suggestions",
     },
     ["<C-c>"] = { "<Esc>", "Leave insert mode" }
-    -- ["<Esc>"] = {
-    --   function()
-    --     if require("cmp").visible() then
-    --       require("cmp").mapping.close()
-    --     end
-    --     return "<Esc>"
-    --   end,
-    --   "close autocomplete suggestions",
-    -- },
   },
   v = {
-    ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Move selected lines down" },
-    ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Move selected lines up" },
-    ["<leader>y"] = { '"+y', "Yank into clippboard" },
-    ["<leader>d"] = { '"_d', "Delete into the void register" },
-    ["<leader>Y"] = { '"+Y', "Yank into system clippboard" },
     ["<leader>ca"] = {
       function()
         vim.lsp.buf.code_action()
       end,
       "LSP code action",
     },
+    ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Move selected lines down" },
+    ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Move selected lines up" },
+    ["<leader>y"] = { '"+y', "Yank into clippboard" },
+    ["<leader>d"] = { '"_d', "Delete into the void register" },
+    ["<leader>Y"] = { '"+Y', "Yank into system clippboard" },
   },
   x = {
     ["<leader>p"] = { '"_dP', "Paste over without copying content" },
@@ -133,6 +205,11 @@ M.telescope = {
       end,
       "Show diagnostics",
     },
+    ["<leader>gh"] = {
+      function()
+        require("telescope.builtin").git_bcommits()
+      end
+      , "Show file history" },
     ["<leader>gb"] = {
       function()
         require("telescope.builtin").git_branches()

@@ -94,7 +94,7 @@ M.tabufline = {
     },
 
     -- close buffer + hide terminal buffer
-    ["<leader>x"] = {
+    ["<leader>xx"] = {
       function()
         require("nvchad.tabufline").close_buffer()
       end,
@@ -339,10 +339,10 @@ M.gitsigns = {
 
   n = {
     -- Navigation through hunks
-    ["]c"] = {
+    ["]h"] = {
       function()
         if vim.wo.diff then
-          return "]c"
+          return "]h"
         end
         vim.schedule(function()
           require("gitsigns").next_hunk()
@@ -353,10 +353,10 @@ M.gitsigns = {
       opts = { expr = true },
     },
 
-    ["[c"] = {
+    ["[h"] = {
       function()
         if vim.wo.diff then
-          return "[c"
+          return "[h"
         end
         vim.schedule(function()
           require("gitsigns").prev_hunk()
@@ -366,21 +366,14 @@ M.gitsigns = {
       "Jump to prev hunk",
       opts = { expr = true },
     },
-
     -- Actions
-    ["<leader>rh"] = {
-      function()
-        require("gitsigns").reset_hunk()
-      end,
-      "Reset hunk",
-    },
 
-    ["<leader>ph"] = {
-      function()
-        require("gitsigns").preview_hunk()
-      end,
-      "Preview hunk",
-    },
+    ["<leader>hb"] = { "<cmd>lua require('gitsigns').blame_line()<cr>", "Git blame" },
+    ["<leader>hs"] = { "<cmd>lua require('gitsigns').stage_hunk()<cr>", "Stage hunk" },
+    ["<leader>hu"] = { "<cmd>lua require('gitsigns').undo_stage_hunk()<cr>", "Undo stage hunk" },
+    ["<leader>hr"] = { "<cmd>lua require('gitsigns').reset_hunk()<cr>", "Reset hunk" },
+    ["<leader>hp"] = { "<cmd>lua require('gitsigns').preview_hunk()<cr>", "Preview hunk" },
+    ["<leader>hR"] = { "<cmd>lua require('gitsigns').reset_buffer()<cr>", "Reset buffer" },
 
     ["<leader>gB"] = {
       function()
@@ -395,6 +388,15 @@ M.gitsigns = {
       end,
       "Toggle deleted",
     },
+  },
+
+  v = {
+    ["<leader>hs"] = { function()
+      require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+    end, "Stage hunk" },
+    ["<leader>hr"] = { function()
+      require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+    end, "Stage hunk" },
   },
 }
 
