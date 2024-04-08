@@ -9,41 +9,6 @@ M.disabled = {
   }
 }
 
--- M.trouble = {
---   n = {
---     ["<leader>xx"] =
---     {
---       "<cmd>Trouble diagnostics toggle<cr>",
---       desc = "Diagnostics (Trouble)",
---     },
---     ["<leader>xd"] =
---     {
---       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
---       desc = "Buffer Diagnostics (Trouble)",
---     },
---     ["<leader>cs"] =
---     {
---       "<cmd>Trouble symbols toggle focus=false<cr>",
---       desc = "Symbols (Trouble)",
---     },
---     ["<leader>cl"] =
---     {
---       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
---       desc = "LSP Definitions / references / ... (Trouble)",
---     },
---     ["<leader>xL"] =
---     {
---       "<cmd>Trouble loclist toggle<cr>",
---       desc = "Location List (Trouble)",
---     },
---     ["<leader>xQ"] =
---     {
---       "<cmd>Trouble qflist toggle<cr>",
---       desc = "Quickfix List (Trouble)",
---     },
---   }
--- }
-
 M.dap = {
   plugin = true,
   n = {
@@ -58,7 +23,7 @@ M.dap = {
 }
 
 M.copilot = {
-  plugin = true,
+  -- plugin = true,
   n = {
     ["<leader>cp"] = {
       function()
@@ -141,7 +106,6 @@ M.abc = {
     ["<leader>gs"] = { "<cmd>Neogit<cr>", "Git Status" },
     ["<leader>y"] = { '"+y', "Yank into clippboard" },
     ["<leader>Y"] = { '"+Y', "Yank into system clippboard" },
-    ["<leader>d"] = { '"_d', "Delete into the void register" },
     ["<leader>fs"] = { "<cmd>SymbolsOutline<cr>", "Toggle SymbolsOutline" },
     ["<C-d>"] = { "<C-d>zz" },
     ["<C-u>"] = { "<C-u>zz" },
@@ -230,6 +194,7 @@ M.rust = {
 }
 
 M.ufo = {
+  plugin = true,
   n = {
     ["zR"] = { function()
       require("ufo").openAllFolds()

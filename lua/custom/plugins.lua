@@ -1,6 +1,6 @@
 local plugins = {
   {
-   "williamboman/mason.nvim",
+    "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         -- cpp
@@ -93,6 +93,7 @@ local plugins = {
   { "github/copilot.vim", lazy = false },
   {
     "zbirenbaum/copilot-cmp",
+    dependencies = "github/copilot.vim",
     config = function()
       require("copilot_cmp").setup()
     end,
@@ -177,6 +178,16 @@ local plugins = {
   {
     "mfussenegger/nvim-dap",
     config = function()
+      local dap = require("dap")
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "$HOME/.local/share/nvim/mason/bin/codelldb",
+          args = { "--port", "${port}" },
+          detached = false,
+        }
+      }
       require("core.utils").load_mappings "dap"
     end,
   },

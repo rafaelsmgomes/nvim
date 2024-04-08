@@ -121,6 +121,7 @@ lspconfig.clangd.setup {
     client.server_capabilities.signarureHelpProvider = false
     on_attach(client, bufnr)
   end,
+  -- cmd = { "clangd", "--offset-encoding=utf-8" },
   capabilities = capabilities,
 }
 
