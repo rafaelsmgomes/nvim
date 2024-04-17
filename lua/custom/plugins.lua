@@ -6,7 +6,7 @@ local plugins = {
         -- cpp
         "clangd",
         "clang-format",
-        "codelldb",
+        -- "codelldb",
         "cmake-language-server",
         -- rust
         "rust-analyzer",
@@ -78,6 +78,9 @@ local plugins = {
           node_decremental = "<s-h>",
         },
       },
+      autotag = {
+        enable = true
+      }
     }
   },
   {
@@ -95,6 +98,7 @@ local plugins = {
     "zbirenbaum/copilot-cmp",
     dependencies = "github/copilot.vim",
     config = function()
+      -- require("core.utils").load_mappings("copilot")
       require("copilot_cmp").setup()
     end,
   },
@@ -177,30 +181,13 @@ local plugins = {
   },
   {
     "mfussenegger/nvim-dap",
-    config = function()
-      local dap = require("dap")
-      dap.adapters.codelldb = {
-        type = "server",
-        port = "${port}",
-        executable = {
-          command = "$HOME/.local/share/nvim/mason/bin/codelldb",
-          args = { "--port", "${port}" },
-          detached = false,
-        }
-      }
-      require("core.utils").load_mappings "dap"
-    end,
-  },
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    event = "VeryLazy",
     dependencies = {
-      "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
+      "leoluz/nvim-dap-go",
     },
-    opts = {
-      handlers = {}
-    },
+    config = function()
+      require("custom.configs.dap")
+    end,
   },
   {
     "rcarriga/nvim-dap-ui",
@@ -231,6 +218,14 @@ local plugins = {
       local crates = require "crates"
       crates.setup(opts)
       crates.show()
+    end,
+  },
+  {
+    "Civitasv/cmake-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = false,
+    config = function()
+      require("cmake-tools").setup({})
     end,
   },
   {
@@ -377,6 +372,7 @@ local plugins = {
     },
     opts = {}
   },
+  { 'b0o/schemastore.nvim' }
 }
 
 return plugins

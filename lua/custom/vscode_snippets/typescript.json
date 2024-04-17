@@ -1,0 +1,18 @@
+{
+  "Import Destructuring": {
+    "prefix": "imd",
+    "body": "import { $2 } from '$1';"
+  },
+  "Import File": {
+    "prefix": "imp",
+    "body": "import $2 from '$1';"
+  },
+  "Import Filename": {
+    "prefix": "imn",
+    "body": "import './$1';"
+  },
+  "Console log": {
+    "prefix": "clg",
+    "body": "console.log($1);"
+  }
+}

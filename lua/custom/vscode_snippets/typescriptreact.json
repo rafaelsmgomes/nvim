@@ -1,0 +1,47 @@
+{
+  "Typescript React Functional Component": {
+    "prefix": "tsrfc",
+    "body": [
+      "type ${TM_FILENAME_BASE}Props =  {",
+      "\tchildren?: React.ReactNode",
+      "$1",
+      "}",
+      "",
+      "const ${TM_FILENAME_BASE/(.*)$/${1:/capitalize}/} = ({$2}:${TM_FILENAME_BASE}Props) => {",
+      "\t\treturn (<>$3</>);",
+      "}",
+      "",
+      "export default ${TM_FILENAME_BASE/(.*)$/${1:/capitalize}/}"
+    ],
+    "description": "Typescript React Functional Component"
+  },
+  "File Name": {
+    "prefix": "fln",
+    "body": "${TM_FILENAME_BASE}",
+    "description": "Get filename."
+  },
+  "Classname Props": {
+    "prefix": "_clas",
+    "body": "{className}:{ className?: string}"
+  },
+  "Base props": {
+    "prefix": "_props",
+    "body": "{children, className}: { children?: React.ReactNode, className?: string}"
+  },
+  "Async Component Error": {
+    "prefix": "@ts-Async",
+    "body": "@ts-expect-error Async Server Component "
+  },
+  "Import Destructuring": {
+    "prefix": "imd",
+    "body": "import { $2 } from '$1';"
+  },
+  "Import File": {
+    "prefix": "imp",
+    "body": "import $2 from '$1';"
+  },
+  "Import Filename": {
+    "prefix": "imn",
+    "body": "import './$1';"
+  }
+}

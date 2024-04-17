@@ -20,7 +20,6 @@ local servers = {
   -- "sqlls",
   "dockerls",
   "nil_ls",
-  "jsonls",
   "tflint",
   "docker_compose_language_service",
   "asm_lsp",
@@ -40,6 +39,17 @@ for _, lsp in pairs(servers) do
     }
   }
 end
+
+lspconfig.jsonls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas,
+      validate = { enable = true }
+    }
+  }
+}
 
 lspconfig.terraformls.setup {
   on_attach = on_attach,

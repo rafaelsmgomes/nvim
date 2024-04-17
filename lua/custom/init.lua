@@ -27,6 +27,10 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 })
 
 
-opt.conceallevel = 1
+-- only add conceallevel if it's a markdown file 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  command = "set conceallevel=1"
+})
 
 

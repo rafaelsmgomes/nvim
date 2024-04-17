@@ -2,7 +2,7 @@
 ---@class M
 local M = {}
 
-M.ui = { theme = 'tokyonight' }
+M.ui = { theme = 'catppuccin' }
 M.plugins = "custom.plugins"
 M.mappings = require "custom.mappings"
 

@@ -19,26 +19,14 @@ M.dap = {
     ["<leader>di"] = { "<cmd>lua require('dap').step_into()<cr>", "Step into" },
     ["<leader>do"] = { "<cmd>lua require('dap').step_out()<cr>", "Step out" },
     ["<leader>dl"] = { "<cmd>lua require('dap').run_last()<cr>", "Run last" },
+    ["<leader>ds"] = { function ()
+      require("custom.utils").open_disassemble()
+    end, "Open disassemble file on a split"}
   }
 }
 
 M.copilot = {
   -- plugin = true,
-  n = {
-    ["<leader>cp"] = {
-      function()
-        local status_output = vim.fn.execute("Copilot status")
-        if string.find(status_output, "Enabled") then
-          vim.cmd("Copilot disable")
-          print(vim.cmd("Copilot status"))
-        else
-          vim.cmd("Copilot enable")
-          print(vim.cmd("Copilot status"))
-        end
-      end,
-      "Toggle Copilot",
-    }
-  },
   i = {
     ["<C-r>"] = {
       'copilot#Accept("\\<CR>")',
