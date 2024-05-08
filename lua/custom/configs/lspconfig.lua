@@ -25,6 +25,7 @@ local servers = {
   "asm_lsp",
   "cmake",
   "html",
+  "pyright",
   -- "terraform_lsp",
 }
 
@@ -54,10 +55,10 @@ lspconfig.jsonls.setup {
 lspconfig.terraformls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  filetypes = { "tf", "hcl", "terraform" },
 }
 
 lspconfig.markdown_oxide.setup({
+  on_attach = on_attach,
   capabilities = capabilities,
   root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
 })

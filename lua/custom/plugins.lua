@@ -139,6 +139,10 @@ local plugins = {
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
     end,
+    dependencies = {
+      "folke/neodev.nvim"
+    },
+
   },
   {
     "tamago324/nlsp-settings.nvim",
@@ -329,6 +333,29 @@ local plugins = {
       },
       ui = {
         -- enable = false
+        checkboxes = {
+          ["x"] = { char = "", hl_group = "ObsidianDone" },
+          ["l"] = { char = "", hl_group = "ObsidianPin" },
+          ["~"] = { char = "󰜺", hl_group = "ObsidianTilde" },
+          [">"] = { char = "", hl_group = "ObsidianRightArrow" },
+          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+        },
+        hl_groups = {
+          ObsidianTodo = { fg = "#89ddff", bold = true },
+          ObsidianDone = { fg = "#98c379", bold = true },
+          ObsidianPin = { fg = "#eed49f", bold = true },
+          ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
+          ObsidianTilde = { bold = true, fg = "#ff5370" },
+          ObsidianBullet = { bold = true, fg = "#89ddff" },
+          ObsidianRefText = { underline = true, fg = "#c792ea" },
+          ObsidianExtLinkIcon = { fg = "#c792ea" },
+          ObsidianTag = { italic = true, fg = "#89ddff" },
+          ObsidianBlockID = { italic = true, fg = "#89ddff" },
+          ObsidianHighlightText = { bg = "#75662e" },
+          Headline2 = { fg = "#94e2d5" },
+          markdownH3 = { fg = "#cba6f7" },
+          markdownH4 = { fg = "#89dceb" },
+        }
       },
       disable_frontmatter = true,
     }
@@ -368,11 +395,116 @@ local plugins = {
         "<cmd>Trouble qflist toggle<cr>",
         desc = "Quickfix List (Trouble)",
       },
-
     },
     opts = {}
   },
-  { 'b0o/schemastore.nvim' }
+  { 'b0o/schemastore.nvim' },
+  {
+    "jmbuhr/otter.nvim",
+    dev = false,
+    opts = {
+      buffers = {
+        set_filetype = false,
+        write_to_disk = false,
+      },
+      lsp = {
+        hover = {
+          border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        }
+      },
+      strip_wrapping_quote_characters = { "'", '"', "`" },
+      -- Otter may not work the way you expect when entire code blocks are indented (eg. in Org files)
+      -- When true, otter handles these cases fully. This is a (minor) performance hit
+      handle_leading_whitespace = false,
+    },
+    -- config = function(_, opts)
+    --   local otter = require('otter')
+    --   otter.setup(opts)
+    --   local languages = {'python', "r", "julia", "lua"}
+    --   otter.activate(languages, true, true, nil)
+    -- end
+
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+      "hrsh7th/nvim-cmp",
+    }
+  },
+  {
+    "quarto-dev/quarto-nvim",
+    dependencies = {
+      "jmbuhr/otter.nvim"
+    },
+    ft = { "quarto" },
+    dev = false,
+    opts = {
+      lspFeatures = {
+        languages = { "r", "python", "julia", "bash", "html" },
+      },
+      -- codeRunner = {
+      --   enabled = true,
+      --   default_method = "slime"
+      -- }
+    },
+
+  },
+  {
+    "jpalardy/vim-slime",
+    init = function()
+      vim.b['quarto_is_python_chunk'] = false
+      Quarto_is_python_chunk = function()
+        require('otter.tools.functions').is_otter_language_context 'python'
+      end
+
+      vim.cmd [[
+      let g:slime_dispatch_ipython_pause = 100
+      function SlimeOverride_EscapeText_quarto(text)
+      call v:lua.Quarto_is_in_python_chunk()
+      if exists('g:slime_python_ipython') && len(split(a:text,"\n")) > 1 && b:quarto_is_python_chunk && !(exists('b:quarto_is_r_mode') && b:quarto_is_r_mode)
+      return ["%cpaste -q\n", g:slime_dispatch_ipython_pause, a:text, "--", "\n"]
+      else
+      if exists('b:quarto_is_r_mode') && b:quarto_is_r_mode && b:quarto_is_python_chunk
+      return [a:text, "\n"]
+      else
+      return [a:text]
+      end
+      end
+      endfunction
+      ]]
+
+      vim.g.slime_target = "tmux"
+      vim.g.slime_python_ipython = 1
+    end,
+    config = function()
+      local function mark_terminal()
+        vim.g.slime_last_channel = vim.b.terminal_job_id
+      end
+
+      local function set_terminal()
+        vim.b.slime_config = { jobid = vim.g.slime_last_channel }
+      end
+    end
+  },
+  {
+    'linux-cultist/venv-selector.nvim',
+    dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim', 'mfussenegger/nvim-dap-python' },
+    opts = {
+      -- Your options go here
+      -- name = "venv",
+      -- auto_refresh = false
+    },
+    event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+    keys = {
+      -- Keymap to open VenvSelector to pick a venv.
+      { '<leader>vs', '<cmd>VenvSelect<cr>' },
+      -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
+      { '<leader>vc', '<cmd>VenvSelectCached<cr>' },
+    },
+  },
+  {
+    "folke/neodev.nvim",
+    opts = {}
+  }
 }
 
 return plugins

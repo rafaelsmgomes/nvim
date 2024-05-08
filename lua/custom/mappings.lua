@@ -167,6 +167,13 @@ M.telescope = {
         require("telescope.builtin").git_branches()
       end
       , "Show git branches" },
+    ["<leader>fp"] = {function ()
+      require("telescope.builtin").find_files({
+        prompt_title = "Find Project Files",
+        cwd = "~/Documents/Obsidian Vault/",
+        file_ignore_patterns = {},
+      })
+    end}
   },
 }
 

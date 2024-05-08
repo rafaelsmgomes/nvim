@@ -2,23 +2,25 @@ local null_ls = require "null-ls"
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local formatting = null_ls.builtins.formatting
-local lint = null_ls.builtins.diagnostics
 
 local sources = {
   formatting.clang_format,
   formatting.prettierd.with {
     extra_filetypes = { "astro", "json", "html", "tmpl", "toml" },
+    -- condition = function ()
+    --   if vim.bo.filetype == "markdown" then
+    --     return false
+    --   end
+    --   return true
+    -- end
   },
-  -- formatting.terrafmt,
-  -- formatting.hclfmt,
   formatting.alejandra,
   formatting.gofmt,
   formatting.goimports_reviser,
 
   require("none-ls.diagnostics.eslint_d"),
   require("none-ls.diagnostics.ruff"),
-  -- require("none-ls-shellcheck.diagnostics"),
-  -- lint.terraform_validate,
+  require("none-ls-shellcheck.diagnostics"),
 }
 
 null_ls.setup {
