@@ -335,6 +335,8 @@ local plugins = {
         -- enable = false
         checkboxes = {
           ["x"] = { char = "", hl_group = "ObsidianDone" },
+          ["!"] = { char = "", hl_group = "ObsidianExclamation" },
+          ["s"] = { char = "", hl_group = "ObsidianStar" },
           ["l"] = { char = "", hl_group = "ObsidianPin" },
           ["~"] = { char = "󰜺", hl_group = "ObsidianTilde" },
           [">"] = { char = "", hl_group = "ObsidianRightArrow" },
@@ -344,7 +346,9 @@ local plugins = {
           ObsidianTodo = { fg = "#89ddff", bold = true },
           ObsidianDone = { fg = "#98c379", bold = true },
           ObsidianPin = { fg = "#eed49f", bold = true },
+          ObsidianStar = { fg = "#eed49f", bold = true },
           ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
+          ObsidianExclamation = { bold = true, fg = "#ff5370" },
           ObsidianTilde = { bold = true, fg = "#ff5370" },
           ObsidianBullet = { bold = true, fg = "#89ddff" },
           ObsidianRefText = { underline = true, fg = "#c792ea" },
@@ -504,6 +508,19 @@ local plugins = {
   {
     "folke/neodev.nvim",
     opts = {}
+  },
+  {
+    "jbyuki/nabla.nvim",
+    config = function()
+      require("nabla").setup({
+        autocmd = { "BufEnter", "BufWinEnter", "TabEnter" },
+        enabled = true,
+        view = {
+          left = "line",
+          right = "sign",
+        }
+      })
+    end,
   }
 }
 
