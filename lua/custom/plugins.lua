@@ -16,6 +16,9 @@ local plugins = {
         "astro-language-server",
         "emmet-language-server",
         "tailwindcss-language-server",
+        "lua-language-server",
+        "typescript-language-server",
+        "prettierd",
         "sqlls",
         "pyright",
         "black",
@@ -323,15 +326,19 @@ local plugins = {
     },
     opts = {
       workspaces = {
-        {
-          name = "personal",
-          path = "~/Documents/Obsidian Vault/",
-        },
+        -- {
+        --   name = "personal",
+        --   path = "~/Documents/Obsidian Vault/",
+        -- },
         {
           name = "buf-parent",
           path = function()
             return vim.fs.dirname(vim.api.nvim_buf_get_name(0))
           end,
+        },
+        {
+          name = "work",
+          path = "~/obsidian/Personal/"
         }
       },
       ui = {

@@ -3,6 +3,8 @@ local M = {}
 M.disabled = {
   n = {
     ["S"] = { "" },
+    ["gi"] = { "" },
+    ["gD"] = { "" },
   },
   i = {
     ["<C-r>"] = { "" }
@@ -68,9 +70,30 @@ M.abc = {
       end,
       "LSP hover",
     },
+    ["gD"] = {
+      function()
+        vim.lsp.buf.declaration()
+      end,
+      "LSP declaration",
+    },
+
     ["gd"] = {
-      "<cmd>Telescope lsp_definitions<CR>",
+      function()
+        vim.lsp.buf.definition()
+      end,
       "LSP definition",
+    },
+    ["gi"] = {
+      function()
+        vim.lsp.buf.implementation()
+      end,
+      "LSP implementation",
+    },
+    ["<leader>D"] = {
+      function()
+        vim.lsp.buf.type_definition()
+      end,
+      "LSP definition type",
     },
     ["<leader>rf"] = {
       function()
