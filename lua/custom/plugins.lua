@@ -44,6 +44,7 @@ local plugins = {
         "vim",
         "lua",
         "markdown",
+        "markdown_inline",
         "rust",
         "go",
         "cpp",
@@ -325,11 +326,13 @@ local plugins = {
         {
           name = "personal",
           path = "~/Documents/Obsidian Vault/",
+        },
+        {
+          name = "buf-parent",
+          path = function()
+            return vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+          end,
         }
-      },
-      daily_notes = {
-        folder = "daily",
-        template = "templates/daily.md",
       },
       ui = {
         -- enable = false
@@ -487,9 +490,13 @@ local plugins = {
   },
   {
     "tpope/vim-dadbod",
-    "kristijanhusak/vim-dadbod-ui",
-    "kristijanhusak/vim-dadbod-completion",
-  }
+    dependencies = {
+      "kristijanhusak/vim-dadbod-ui",
+      "kristijanhusak/vim-dadbod-completion",
+    },
+    lazy = false
+  },
+
 }
 
 return plugins
