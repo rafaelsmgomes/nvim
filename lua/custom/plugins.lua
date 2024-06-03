@@ -330,16 +330,20 @@ local plugins = {
         --   name = "personal",
         --   path = "~/Documents/Obsidian Vault/",
         -- },
-        {
-          name = "buf-parent",
-          path = function()
-            return vim.fs.dirname(vim.api.nvim_buf_get_name(0))
-          end,
-        },
+        -- {
+        --   name = "buf-parent",
+        --   path = function()
+        --     return vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+        --   end,
+        -- },
         {
           name = "work",
           path = "~/obsidian/Personal/"
         }
+      },
+      completion = {
+        nvim_cmp = true,
+        min_chars = 2,
       },
       ui = {
         -- enable = false

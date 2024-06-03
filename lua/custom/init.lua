@@ -52,3 +52,4 @@ vim.api.nvim_set_hl(0, "markdownH4", { fg = "#89dceb" })
 -- opt.smartindent = true
 -- opt.tabstop = 2
 -- opt.softtabstop = 2
+--
