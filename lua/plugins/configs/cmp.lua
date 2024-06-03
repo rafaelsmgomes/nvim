@@ -114,7 +114,6 @@ local options = {
         }
       }
     },
-    { name = 'otter' },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "nvim_lua" },
