@@ -499,15 +499,14 @@ local plugins = {
       })
     end,
   },
-  {
-    "tpope/vim-dadbod",
-    dependencies = {
-      "kristijanhusak/vim-dadbod-ui",
-      "kristijanhusak/vim-dadbod-completion",
-    },
-    lazy = false
-  },
-
+  -- {
+  --   "tpope/vim-dadbod",
+  --   dependencies = {
+  --     "kristijanhusak/vim-dadbod-ui",
+  --     "kristijanhusak/vim-dadbod-completion",
+  --   },
+  --   lazy = false
+  -- },
 }
 
 return plugins

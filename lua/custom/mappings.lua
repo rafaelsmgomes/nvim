@@ -21,9 +21,9 @@ M.dap = {
     ["<leader>di"] = { "<cmd>lua require('dap').step_into()<cr>", "Step into" },
     ["<leader>do"] = { "<cmd>lua require('dap').step_out()<cr>", "Step out" },
     ["<leader>dl"] = { "<cmd>lua require('dap').run_last()<cr>", "Run last" },
-    ["<leader>ds"] = { function ()
+    ["<leader>ds"] = { function()
       require("custom.utils").open_disassemble()
-    end, "Open disassemble file on a split"}
+    end, "Open disassemble file on a split" }
   }
 }
 
@@ -185,18 +185,22 @@ M.telescope = {
         require("telescope.builtin").git_bcommits()
       end
       , "Show file history" },
+    ["<leader>sh"] = {
+      function()
+        require("telescope.builtin").help_tags()
+      end, "Search Neovim help" },
+    ["<leader>sq"] = {
+      function()
+        require("telescope.builtin").quickfixhistory()
+      end, "Search quickfixhistory and show on quickfix" },
+    ["<leader>sm"] = {
+      function()
+        require("telescope.builtin").marks()
+      end, "Search marks" },
     ["<leader>gb"] = {
       function()
         require("telescope.builtin").git_branches()
-      end
-      , "Show git branches" },
-    ["<leader>fp"] = {function ()
-      require("telescope.builtin").find_files({
-        prompt_title = "Find Project Files",
-        cwd = "~/Documents/Obsidian Vault/",
-        file_ignore_patterns = {},
-      })
-    end}
+      end, "Show git branches" },
   },
 }
 
