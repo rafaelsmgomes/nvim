@@ -139,5 +139,4 @@ lspconfig.clangd.setup {
 lspconfig.sqlls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = { "sql-language-server", "up", "--method", "stdio" }
 }
