@@ -28,6 +28,10 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "set conceallevel=1"
   -- command = "set conceallevel=1 tabstop=4 shiftwidth=4 softtabstop=4"
 })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  command = "setlocal spell"
+})
 
 vim.g['text_conceal'] = "gm"
 
