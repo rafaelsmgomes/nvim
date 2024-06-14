@@ -5,6 +5,7 @@ M.disabled = {
     ["S"] = { "" },
     ["gi"] = { "" },
     ["gD"] = { "" },
+    -- ["zo"] = { "" },
   },
   i = {
     ["<C-r>"] = { "" }
@@ -14,8 +15,13 @@ M.disabled = {
 M.dap = {
   plugin = true,
   n = {
+    ["<leader>="] = { function()
+      require("dapui").eval(nil, { enter = true })
+    end, "Toggle breakpoint" },
     ["<leader>db"] = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle breakpoint" },
-    ["<leader>dr"] = { "<cmd>lua require('dap').repl.open()<cr>", "Repl" },
+    ["<leader>dr"] = { function()
+      require("dapui").open()
+    end, "Repl" },
     ["<leader>dc"] = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
     ["<leader>dn"] = { "<cmd>lua require('dap').step_over()<cr>", "Step over" },
     ["<leader>di"] = { "<cmd>lua require('dap').step_into()<cr>", "Step into" },
@@ -23,7 +29,12 @@ M.dap = {
     ["<leader>dl"] = { "<cmd>lua require('dap').run_last()<cr>", "Run last" },
     ["<leader>ds"] = { function()
       require("custom.utils").open_disassemble()
-    end, "Open disassemble file on a split" }
+    end, "Open disassemble file on a split" },
+
+    ["<M-c>"] = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
+    ["<M-n>"] = { "<cmd>lua require('dap').step_over()<cr>", "Step over" },
+    ["<M-i>"] = { "<cmd>lua require('dap').step_into()<cr>", "Step into" },
+    ["<M-o>"] = { "<cmd>lua require('dap').step_out()<cr>", "Step out" },
   }
 }
 
@@ -40,6 +51,13 @@ M.copilot = {
 
 M.abc = {
   n = {
+    ["<leader>cc"] = { "<cmd> %y+ <CR>", "Copy whole file" },
+    ["<leader>cn"] = { "<cmd>cn<CR>", "Go to next quickfix" },
+    ["<leader>cp"] = { "<cmd>cp<CR>", "Go to prev quickfix" },
+    ["<A-.>"] = { "<cmd>vertical resize +5<CR>", "Increase vertical size" },
+    ["<A-,>"] = { "<cmd>vertical resize -5<CR>", "Decrease vertical size" },
+    ["<A-\\>>"] = { "<cmd>horizontal resize +5<CR>", "Increase vertical size" },
+    ["<A-\\<>"] = { "<cmd>horizontal resize -5<CR>", "Decrease vertical size" },
     ["<leader>ra"] = {
       function()
         require("nvchad.renamer").open()
@@ -193,6 +211,7 @@ M.telescope = {
       function()
         require("telescope.builtin").quickfixhistory()
       end, "Search quickfixhistory and show on quickfix" },
+    ["<leader>so"] = { "<cmd>ObsidianSearch<CR>", "Search Obsidian" },
     ["<leader>sm"] = {
       function()
         require("telescope.builtin").marks()
@@ -204,33 +223,22 @@ M.telescope = {
   },
 }
 
-M.rust = {
-  n = {
-    ["<leader>rm"] = {
-      function()
-        require("rust-tools").expand_macro.expand_macro()
-      end,
-      "Expand macros recursively",
-    },
-  },
-}
-
 M.ufo = {
-  plugin = true,
+  -- plugin = true,
   n = {
     ["zR"] = { function()
       require("ufo").openAllFolds()
     end, "Open all Folds" },
     ["zr"] = { function()
       require("ufo").openFoldsExceptKinds()
-    end, "Open all Folds" },
+    end, "Open one level of Folds" },
     ["zM"] = { function()
       require("ufo").closeAllFolds()
     end, "Close all Folds"
     },
     ["zm"] = { function()
       require("ufo").closeFoldsWith()
-    end, "Close all Folds"
+    end, "Close one level of folds"
     },
     ["zK"] = { function()
       local winid = require("ufo").peekFoldedLinesUnderCursor()
@@ -238,7 +246,7 @@ M.ufo = {
         vim.lsp.buf.hover()
       end
     end, "Peek fold" },
-    ["zv"] = { "za", "Toggle fold" }
+    ["zo"] = { "za", "Toggle fold" }
   }
 }
 

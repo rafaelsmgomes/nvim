@@ -192,6 +192,7 @@ local plugins = {
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "leoluz/nvim-dap-go",
+      "theHamsta/nvim-dap-virtual-text",
     },
     config = function()
       require("custom.configs.dap")
@@ -289,7 +290,8 @@ local plugins = {
     },
     lazy = false,
     config = function()
-      require("leap").add_default_mappings()
+      vim.keymap.set({ 'n' }, 's', '<Plug>(leap-forward)')
+      vim.keymap.set({ 'n' }, 'S', '<Plug>(leap-backward)')
     end,
   },
   {
@@ -312,9 +314,9 @@ local plugins = {
   {
     "drybalka/tree-climber.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = function()
-      return require("custom.configs.nvim-treesitter")
-    end
+    -- opts = function()
+    --   return require("custom.configs.nvim-treesitter")
+    -- end
   },
   {
     "epwalsh/obsidian.nvim",
@@ -341,6 +343,9 @@ local plugins = {
           path = "~/obsidian/Personal/"
         }
       },
+      follow_url_func = function(url)
+        vim.fn.jobstart({ "open", url })
+      end,
       completion = {
         nvim_cmp = true,
         min_chars = 2,
@@ -349,15 +354,18 @@ local plugins = {
         -- enable = false
         checkboxes = {
           ["x"] = { char = "", hl_group = "ObsidianDone" },
-          ["!"] = { char = "", hl_group = "ObsidianExclamation" },
-          ["s"] = { char = "", hl_group = "ObsidianStar" },
+          -- ["!"] = { char = "", hl_group = "ObsidianExclamation" },
+          ["!"] = { char = "", hl_group = "ObsidianExclamation" },
+          -- ["s"] = { char = "", hl_group = "ObsidianStar" },
           ["l"] = { char = "", hl_group = "ObsidianPin" },
           ["~"] = { char = "󰜺", hl_group = "ObsidianTilde" },
           [">"] = { char = "", hl_group = "ObsidianRightArrow" },
           [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+          ['?'] = { char = "", hl_group = "ObsidianQuestion" },
         },
         hl_groups = {
           ObsidianTodo = { fg = "#89ddff", bold = true },
+          ObsidianQuestion = { bold = true, fg = "#ff5370" },
           ObsidianDone = { fg = "#98c379", bold = true },
           ObsidianPin = { fg = "#eed49f", bold = true },
           ObsidianStar = { fg = "#eed49f", bold = true },
@@ -375,46 +383,61 @@ local plugins = {
           markdownH4 = { fg = "#89dceb" },
         }
       },
-      disable_frontmatter = true,
+      disable_frontmatter = function()
+        local filepath = vim.fn.expand("%:p")
+        local path_includes_dir = function(filepath, directory)
+          return filepath:find(directory, 1, true) ~= nil
+        end
+        local disable_in_dirs = { "daily", "templates", "Templates", }
+        for _, dir in ipairs(disable_in_dirs) do
+          if path_includes_dir(filepath, dir) then
+            return true
+          end
+        end
+        return false
+      end,
+      note_id_func = function(title)
+        local suffix = ""
+        if title ~= nil then
+          suffix = title:gsub(" ", "-")
+        else
+          for _ = 1, 4 do
+            suffix = suffix .. string.char(math.random(65, 90))
+          end
+        end
+        return suffix .. "-" .. tostring(os.time())
+      end,
+      note_frontmatter_func = function(note)
+        -- Add the title of the note as an alias.
+        if note.title then
+          note:add_alias(note.title)
+        end
+        local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+
+        -- `note.metadata` contains any manually added fields in the frontmatter.
+        -- So here we just make sure those fields are kept in the frontmatter.
+        if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+          for k, v in pairs(note.metadata) do
+            out[k] = v
+          end
+        end
+
+        return out
+      end,
+      templates = {
+        folder = "templates",
+        date_format = "%Y-%m-%d",
+        time_format = "%H:%M",
+        -- A map for custom variables, the key should be the variable and the value a function
+        substitutions = {},
+      },
+      daily_notes = {
+        folder = "daily",
+        date_format = "%Y-%m-%d",
+        template = '~/obsidian/Personal/templates/daily.md',
+      }
+
     }
-  },
-  {
-    "folke/trouble.nvim",
-    branch = "dev",
-    lazy = "Lazy",
-    keys = {
-      {
-        "<leader>xd",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>xf",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>xs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>xl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-    },
-    opts = {}
   },
   { 'b0o/schemastore.nvim' },
   {
@@ -467,19 +490,19 @@ local plugins = {
 
   },
   {
-    'linux-cultist/venv-selector.nvim',
-    dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim', 'mfussenegger/nvim-dap-python' },
-    opts = {
-      -- Your options go here
-      -- name = "venv",
-      -- auto_refresh = false
+    "linux-cultist/venv-selector.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap", "mfussenegger/nvim-dap-python", --optional
+      { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
     },
-    event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+    lazy = false,
+    branch = "regexp", -- This is the regexp branch, use this for the new version
+    config = function()
+      require("venv-selector").setup()
+    end,
     keys = {
-      -- Keymap to open VenvSelector to pick a venv.
-      { '<leader>vs', '<cmd>VenvSelect<cr>' },
-      -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
-      { '<leader>vc', '<cmd>VenvSelectCached<cr>' },
+      { ",v", "<cmd>VenvSelect<cr>" },
     },
   },
   {
@@ -499,14 +522,77 @@ local plugins = {
       })
     end,
   },
+  {
+    "tpope/vim-dadbod",
+    dependencies = {
+      "kristijanhusak/vim-dadbod-ui",
+      "kristijanhusak/vim-dadbod-completion",
+    },
+    event = "BufEnter"
+  },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require('notify').setup()
+    end,
+    lazy = false
+  },
+  {
+    "stevearc/dressing.nvim",
+    config = function()
+      require("dressing").setup()
+    end,
+    lazy = false
+  },
+  {
+    "RRethy/vim-illuminate",
+    config = function()
+      require("illuminate").configure({
+        under_cursor = false
+      })
+    end,
+    event = "BufEnter"
+  },
+  {
+    "tpope/vim-surround",
+    lazy = false
+  },
   -- {
-  --   "tpope/vim-dadbod",
-  --   dependencies = {
-  --     "kristijanhusak/vim-dadbod-ui",
-  --     "kristijanhusak/vim-dadbod-completion",
-  --   },
+  --   "gelguy/wilder.nvim",
+  --   config = function ()
+  --     local wilder = require("wilder")
+  --     wilder.setup({
+  --       modes = {":", "/", "?"},
+  --       next_key = "<C-n>",
+  --       previous_key = "<C-p>",
+  --     })
+  --     wilder.set_option('renderer', wilder.popupmenu_renderer({
+  --       highlighter = wilder.basic_highlighter()
+  --     }))
+  --   end,
   --   lazy = false
-  -- },
+  -- }
+  {
+    "nanotee/sqls.nvim"
+  },
+  {
+    'pwntester/octo.nvim',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function ()
+      require("octo").setup()
+    end
+  },
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    },
+    lazy = false
+  }
 }
 
 return plugins

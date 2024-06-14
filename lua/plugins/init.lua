@@ -185,7 +185,15 @@ local default_plugins = {
       return require "plugins.configs.cmp"
     end,
     config = function(_, opts)
-      require("cmp").setup(opts)
+      local cmp = require('cmp')
+      cmp.setup(opts)
+      cmp.setup.filetype({"sql"},{
+        sources = {
+          {name = "nvim_lsp" },
+          {name = "vim-dadbod-completion" },
+          {name = "buffer" },
+        }
+      })
     end,
   },
 
@@ -196,8 +204,8 @@ local default_plugins = {
       -- { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
       -- { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
       -- { "gbc", mode = "n", desc = "Comment toggle current block" },
-      -- { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-      -- { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
+      { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+      { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
       require("core.utils").load_mappings "comment"

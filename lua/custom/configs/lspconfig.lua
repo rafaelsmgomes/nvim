@@ -136,7 +136,28 @@ lspconfig.clangd.setup {
   capabilities = capabilities,
 }
 
-lspconfig.sqlls.setup {
-  on_attach = on_attach,
+lspconfig.sqls.setup{
+  on_attach = function (client, bufnr)
+    require('sqls').on_attach(client, bufnr)
+  end,
   capabilities = capabilities,
+  root_dir = function (fname)
+    return vim.fn.expand("%:p:h")
+  end,
+  settings = {
+    sqls = {
+      -- enabled = true,
+      connections = {
+        {
+          driver = "postgresql",
+          dataSource = "postgresql://postgres:postgres@localhost:5555/postgres"
+        },
+      },
+    },
+  },
 }
+
+-- lspconfig.sqlls.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- }

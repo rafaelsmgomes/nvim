@@ -16,7 +16,7 @@ local sources = {
   },
   formatting.alejandra,
   formatting.gofmt,
-  formatting.goimports_reviser,
+  -- formatting.goimports_reviser,
 
   require("none-ls.diagnostics.eslint_d"),
   require("none-ls.diagnostics.ruff"),
