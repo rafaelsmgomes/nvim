@@ -208,7 +208,8 @@ local plugins = {
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
-      dapui.setup()
+      local opts = require("custom.configs.dap-ui")
+      dapui.setup(opts)
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
@@ -219,6 +220,12 @@ local plugins = {
         dapui.close()
       end
     end,
+  },
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    config = function()
+      require("nvim-dap-virtual-text").setup({})
+    end
   },
   {
     "saecki/crates.nvim",
@@ -582,7 +589,7 @@ local plugins = {
       "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons",
     },
-    config = function ()
+    config = function()
       require("octo").setup()
     end
   },
@@ -592,6 +599,25 @@ local plugins = {
       "nvim-lua/plenary.nvim"
     },
     lazy = false
+  },
+  {
+    "kndndrj/nvim-dbee",
+    dependencies = {
+      "MunifTanjim/nui.nvim"
+    },
+    build = function()
+      require("dbee").install()
+    end,
+    config = function()
+      require("dbee").setup()
+    end,
+  },
+  {
+    "chentoast/marks.nvim",
+    config = function()
+      require("marks").setup()
+    end,
+    lazy = false,
   }
 }
 

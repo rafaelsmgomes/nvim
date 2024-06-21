@@ -120,8 +120,10 @@ lspconfig.gopls.setup {
     gopls = {
       completeUnimported = true,
       usePlaceholders = true,
+      staticcheck = true,
       analyses = {
         unusedParams = true,
+        ST1003 = true,
       },
     },
   },

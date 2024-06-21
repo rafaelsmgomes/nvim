@@ -116,6 +116,7 @@ local options = {
         }
       }
     },
+    { name = "cmp-dbee" },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "nvim_lua" },

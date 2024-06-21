@@ -171,6 +171,14 @@ local default_plugins = {
           require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
       },
+      {
+        "MattiasMTS/cmp-dbee",
+        dependencies = {
+          {"kndndrj/nvim-dbee"}
+        },
+        ft = "sql",
+        opts = {},
+      },
 
       -- cmp sources plugins
       {
@@ -189,6 +197,7 @@ local default_plugins = {
       cmp.setup(opts)
       cmp.setup.filetype({"sql"},{
         sources = {
+          {name = "cmp-dbee"},
           {name = "nvim_lsp" },
           {name = "vim-dadbod-completion" },
           {name = "buffer" },

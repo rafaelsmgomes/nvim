@@ -18,9 +18,9 @@ M.dap = {
     ["<leader>="] = { function()
       require("dapui").eval(nil, { enter = true })
     end, "Toggle breakpoint" },
-    ["<leader>db"] = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle breakpoint" },
-    ["<leader>dr"] = { function()
-      require("dapui").open()
+    ["<leader>b"] = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle breakpoint" },
+    ["<leader>dt"] = { function()
+      require("dapui").toggle()
     end, "Repl" },
     ["<leader>dc"] = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
     ["<leader>dn"] = { "<cmd>lua require('dap').step_over()<cr>", "Step over" },
@@ -52,12 +52,12 @@ M.copilot = {
 M.abc = {
   n = {
     ["<leader>cc"] = { "<cmd> %y+ <CR>", "Copy whole file" },
-    ["<leader>cn"] = { "<cmd>cn<CR>", "Go to next quickfix" },
-    ["<leader>cp"] = { "<cmd>cp<CR>", "Go to prev quickfix" },
+    ["<leader>nn"] = { "<cmd>cn<CR>", "Go to next quickfix" },
+    ["<leader>pp"] = { "<cmd>cp<CR>", "Go to prev quickfix" },
     ["<A-.>"] = { "<cmd>vertical resize +5<CR>", "Increase vertical size" },
     ["<A-,>"] = { "<cmd>vertical resize -5<CR>", "Decrease vertical size" },
-    ["<A-\\>>"] = { "<cmd>horizontal resize +5<CR>", "Increase vertical size" },
-    ["<A-\\<>"] = { "<cmd>horizontal resize -5<CR>", "Decrease vertical size" },
+    ["<A-/>"] = { "<cmd>horizontal resize +5<CR>", "Increase vertical size" },
+    ["<A-m>"] = { "<cmd>horizontal resize -5<CR>", "Decrease vertical size" },
     ["<leader>ra"] = {
       function()
         require("nvchad.renamer").open()
@@ -177,7 +177,7 @@ M.abc = {
     ["<leader>Y"] = { '"+Y', "Yank into system clippboard" },
   },
   x = {
-    ["<leader>p"] = { '"_dP', "Paste over without copying content" },
+    -- ["<leader>p"] = { '"_dP', "Paste over without copying content" },
   },
 }
 
@@ -212,10 +212,10 @@ M.telescope = {
         require("telescope.builtin").quickfixhistory()
       end, "Search quickfixhistory and show on quickfix" },
     ["<leader>so"] = { "<cmd>ObsidianSearch<CR>", "Search Obsidian" },
-    ["<leader>sm"] = {
-      function()
-        require("telescope.builtin").marks()
-      end, "Search marks" },
+    -- ["<leader>sm"] = {
+    --   function()
+    --     require("telescope.builtin").marks()
+    --   end, "Search marks" },
     ["<leader>gb"] = {
       function()
         require("telescope.builtin").git_branches()
@@ -247,6 +247,26 @@ M.ufo = {
       end
     end, "Peek fold" },
     ["zo"] = { "za", "Toggle fold" }
+  }
+}
+
+M.dbee = {
+  n = {
+    ["<leader>dbo"] = { function()
+      require("dbee").open()
+    end, "Open Dbee" },
+    ["<leader>dbc"] = { function()
+      require("dbee").close()
+    end, "Close Dbee" },
+    ["<leader>dbr"] = { function(query)
+      require("dbee").execute(query)
+    end, "Query Dbee" },
+    ["<leader>dbt"] = { function()
+      require("dbee").toggle()
+    end, "Toggle Dbee" },
+    ["<leader>dbs"] = { function(format, output, opts)
+      require("dbee").store(format, output, opts)
+    end, "Store the current result to file/buffer/yank-register" }
   }
 }
 
