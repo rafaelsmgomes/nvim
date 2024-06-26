@@ -270,4 +270,41 @@ M.dbee = {
   }
 }
 
+
+M.harpoon = {
+  n = {
+    ["<leader>ho"] = { function ()
+      require("harpoon.ui").toggle_quick_menu()
+    end, "Harpoon toggle menu"},
+    ["<leader>ha"] = { function ()
+      require("harpoon.mark").add_file()
+      require("notify")("Added file to harpoon", "info", { title = "Harpoon" })
+    end, "Harpoon add file"},
+    ["<leader>hx"] = {function ()
+      require("harpoon.mark").rm_file()
+      require("notify")("Removed file to harpoon", "info", { title = "Harpoon" })
+    end, "Harpoon remove file"},
+    ["<leader>hc"] = {function ()
+      require("harpoon.mark").clear_all()
+      require("notify")("Removed all files from harpoon", "info", { title = "Harpoon" })
+    end, "Harpoon clear all files"},
+    ["<leader>1"] = {function ()
+      require("harpoon.ui").nav_file(1)
+    end, "Quickly jump to harpoon 1"},
+    ["<leader>2"] = {function ()
+      require("harpoon.ui").nav_file(2)
+    end, "Quickly jump to harpoon 2"},
+    ["<leader>3"] = {function ()
+      require("harpoon.ui").nav_file(3)
+    end, "Quickly jump to harpoon 3"},
+    ["<leader>4"] = {function ()
+      require("harpoon.ui").nav_file(4)
+    end, "Quickly jump to harpoon 4"},
+    ["<leader>5"] = {function ()
+      require("harpoon.ui").nav_file(5)
+    end, "Quickly jump to harpoon 5"},
+
+  }
+}
+
 return M

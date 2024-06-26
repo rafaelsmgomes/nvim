@@ -48,6 +48,24 @@ local options = {
       n = { ["q"] = require("telescope.actions").close },
     },
   },
+  pickers = {
+    lsp_references = {
+      -- theme = "dropdown",
+      entry_maker = function(entry)
+        -- Trim the cwd from the entry's filename to get the relative path
+        local relative_filename = vim.fn.fnamemodify(entry.filename, ":~:.")
+        local display = relative_filename .. ":" .. entry.lnum .. ":" .. entry.col
+        return {
+          display = display,
+          ordinal = relative_filename,
+          filename = entry.filename,
+          lnum = entry.lnum,
+          col = entry.col,
+          text = entry.text
+        }
+      end
+    }
+  },
 
   extensions_list = { "themes", "terms" },
 }

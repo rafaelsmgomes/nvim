@@ -618,6 +618,16 @@ local plugins = {
       require("marks").setup()
     end,
     lazy = false,
+  },
+  {
+    "ThePrimeagen/harpoon",
+    config = function ()
+      require("harpoon").setup({
+        menu = {
+          width = 100,
+        }
+      })
+    end
   }
 }
 

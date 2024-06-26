@@ -1,7 +1,17 @@
 local dap = require("dap")
 print("Loading dap.lua")
 require("core.utils").load_mappings "dap"
-require("dap-go").setup()
+require("dap-go").setup({
+  dap_configurations = {
+    {
+      type = "go",
+      name = "Debug root main.go",
+      request = "launch",
+      program = "${workspaceFolder}/main.go",
+    }
+  }
+})
+
 
 dap.adapters.codelldb = {
   type = "server",
@@ -31,6 +41,3 @@ dap.configurations.c = {
 }
 dap.configurations.cpp = dap.configurations.c
 dap.configurations.rust = dap.configurations.c
-
-
-
